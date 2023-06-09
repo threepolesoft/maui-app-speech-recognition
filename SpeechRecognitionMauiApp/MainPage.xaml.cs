@@ -1,24 +1,39 @@
-﻿namespace SpeechRecognitionMauiApp;
+﻿using SpeechRecognitionMauiApp.Helpers.Android;
+using SpeechRecognitionMauiApp.Util;
+
+namespace SpeechRecognitionMauiApp;
 
 public partial class MainPage : ContentPage
 {
-	int count = 0;
 
-	public MainPage()
+    public MainPage()
 	{
 		InitializeComponent();
+
+		Init();
 	}
 
-	private void OnCounterClicked(object sender, EventArgs e)
+	public async void Init()
 	{
-		count++;
 
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
+        AppPermission appPermission=new AppPermission();
 
-		SemanticScreenReader.Announce(CounterBtn.Text);
+        var MicroPer = await appPermission.RequestPermissionMicrophone();
+
+		if (MicroPer)
+		{
+            MicrosoftCognitiveService microsoftCognitiveService = new MicrosoftCognitiveService();
+
+            await microsoftCognitiveService.InitSpeech(new Progress<String>(regTex =>
+            {
+				if (regTex != "")
+				{
+					RegText.Text = regTex;
+
+                }
+            }));
+        }
 	}
+
 }
 
