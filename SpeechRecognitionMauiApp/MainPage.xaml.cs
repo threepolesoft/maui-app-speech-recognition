@@ -13,27 +13,54 @@ public partial class MainPage : ContentPage
 		Init();
 	}
 
-	public async void Init()
-	{
+    public async void Init()
+    {
 
-        AppPermission appPermission=new AppPermission();
+        if (DeviceInfo.Platform == DevicePlatform.Android)
+        {
 
-        var MicroPer = await appPermission.RequestPermissionMicrophone();
+            AppPermission appPermission = new AppPermission();
 
-		if (MicroPer)
-		{
-            MicrosoftCognitiveService microsoftCognitiveService = new MicrosoftCognitiveService();
+            var MicroPer = await appPermission.RequestPermissionMicrophone();
 
-            await microsoftCognitiveService.InitSpeech(new Progress<String>(regTex =>
+            if (MicroPer)
             {
-				if (regTex != "")
-				{
-					RegText.Text = regTex;
+                MicrosoftCognitiveService microsoftCognitiveService = new MicrosoftCognitiveService();
 
-                }
-            }));
+                await microsoftCognitiveService.InitSpeech(new Progress<String>(regTex =>
+                {
+                    if (regTex != "")
+                    {
+                        RegText.Text = regTex;
+
+                    }
+                }));
+            }
+
         }
-	}
+        else if (DeviceInfo.Platform == DevicePlatform.WinUI)
+        {
+            AppPermission appPermission = new AppPermission();
+
+            var MicroPer = await appPermission.RequestPermissionMicrophone();
+
+            if (MicroPer)
+            {
+                MicrosoftCognitiveService microsoftCognitiveService = new MicrosoftCognitiveService();
+
+                await microsoftCognitiveService.InitSpeech(new Progress<String>(regTex =>
+                {
+                    if (regTex != "")
+                    {
+                        RegText.Text = regTex;
+
+                    }
+                }));
+            }
+
+        }
+
+    }
 
 }
 

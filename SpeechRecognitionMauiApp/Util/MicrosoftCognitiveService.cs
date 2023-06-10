@@ -15,6 +15,13 @@ namespace SpeechRecognitionMauiApp.Util
 
             var recon = new SpeechRecognizer(config);
 
+
+
+            recon.Recognizing += (s, e) =>
+            {
+
+            };
+
             recon.Recognized += (s, e) =>
             {
                 if (e.Result.Reason == ResultReason.RecognizedSpeech)
