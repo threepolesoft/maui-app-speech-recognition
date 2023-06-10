@@ -6,7 +6,7 @@
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="uap rescap">
 
-  <Identity Name="maui-package-name-placeholder" Publisher="CN=User Name" Version="0.0.0.0" />
+  <Identity Name="maui-package-name-placeholder" Publisher="CN=PIF" Version="1.0.3.0" />
 
   <mp:PhoneIdentity PhoneProductId="2CDC5C50-7761-4305-81FA-2273430A949C" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -41,6 +41,12 @@
 
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
+    <Capability Name="internetClient"/>
+    <Capability Name="internetClientServer"/>
+    <uap:Capability Name="chat"/>
+    <Capability Name="privateNetworkClientServer"/>
+    <DeviceCapability Name="location"/>
+    <DeviceCapability Name="microphone"/>
   </Capabilities>
 
 </Package>
